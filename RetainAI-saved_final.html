@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Risk & Retention Intelligence Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        slate: {
+                            850: '#1e293b',
+                            950: '#020617',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+        .metric-gradient {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+        }
+        .risk-badge {
+            background: linear-gradient(90deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+        }
+        .loyalty-badge {
+            background: linear-gradient(90deg, #dcfce7 0%, #bbf7d0 100%);
+            color: #166534;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <!-- Header Section -->
+    <header class="relative py-16 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-0 -left-10 w-72 h-72 bg-brand-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+            <div class="absolute bottom-0 -right-10 w-96 h-96 bg-brand-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center space-x-2 bg-brand-100 text-brand-700 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-6 animate-float">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04M12 21.48l.342-1.368a12 12 0 01-10.957-10.957L1 8.822a12 12 0 0011.342 12.658z" />
+                </svg>
+                <span>Intelligence Report v2.4</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-display font-extrabold text-slate-900 tracking-tight leading-tight mb-4">
+                Customer Risk & <br class="hidden md:block"> Retention Intelligence Report
+            </h1>
+            <p class="max-w-2xl mx-auto text-lg text-slate-600 leading-relaxed">
+                Strategic analysis and predictive modeling for identifying churn risk and optimizing loyalty drivers.
+            </p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pb-24">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Column: Primary Content (8 Cols) -->
+            <div class="lg:col-span-8 space-y-8">
+                
+                <!-- Executive Summary -->
+                <section class="glass-card rounded-3xl p-8 md:p-10">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="p-2 bg-brand-500 text-white rounded-xl shadow-lg shadow-brand-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-display font-bold text-slate-900">Executive Summary</h2>
+                    </div>
+                    <p class="text-slate-700 text-lg leading-relaxed">
+                        This report analyzes customer churn risk and loyalty drivers for a subscription-based company, offering actionable recommendations for retention improvement. The predictive model demonstrates strong performance in identifying at-risk customers for targeted intervention. Key loyalty drivers include longer-term contracts and the use of security and tech support services. Conversely, customers using Fiber Optic internet, those with specific phone service configurations (none or multiple lines), and those opting for streaming services or paperless billing exhibit a higher propensity to churn. The company can leverage these insights for data-driven strategies to proactively engage vulnerable segments and reinforce loyalty.
+                    </p>
+                </section>
+
+                <!-- Model Performance Detailed -->
+                <section class="glass-card rounded-3xl p-8 md:p-10">
+                    <h2 class="text-2xl font-display font-bold text-slate-900 mb-6">Model Performance Analysis</h2>
+                    <div class="space-y-6">
+                        <p class="text-slate-700 leading-relaxed">
+                            The predictive model effectively distinguishes between customers likely to churn and those likely to remain loyal. Out of 1407 customers evaluated:
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-start space-x-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-full font-bold">1</span>
+                                <div>
+                                    <p class="font-bold text-slate-900">Correctly Identified Churners</p>
+                                    <p class="text-sm text-slate-600">193 customers identified for proactive intervention.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-full font-bold">2</span>
+                                <div>
+                                    <p class="font-bold text-slate-900">Correctly Identified Loyal</p>
+                                    <p class="text-sm text-slate-600">915 customers confirmed as low risk.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4 p-4 rounded-2xl bg-orange-50 border border-orange-100">
+                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-orange-100 text-orange-600 rounded-full font-bold">3</span>
+                                <div>
+                                    <p class="font-bold text-slate-900">False Negatives (Missed)</p>
+                                    <p class="text-sm text-slate-600">181 customers not flagged but should have been.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4 p-4 rounded-2xl bg-blue-50 border border-blue-100">
+                                <span class="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-blue-100 text-blue-600 rounded-full font-bold">4</span>
+                                <div>
+                                    <p class="font-bold text-slate-900">False Positives (Overshot)</p>
+                                    <p class="text-sm text-slate-600">118 customers flagged incorrectly.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-600 italic border-l-4 border-brand-500 pl-4 py-2">
+                            The model provides a strong foundation, with an opportunity to refine its ability to detect more customers on the verge of leaving.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Actionable Recommendations -->
+                <section class="bg-slate-900 rounded-3xl p-8 md:p-10 text-white shadow-2xl overflow-hidden relative">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-500 opacity-20 rounded-full blur-3xl"></div>
+                    
+                    <h2 class="text-2xl font-display font-bold mb-8 flex items-center space-x-3">
+                        <span class="p-1.5 bg-brand-500 rounded-lg">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                            </svg>
+                        </span>
+                        <span>Actionable Retention Recommendations</span>
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="group hover:bg-slate-800 p-4 rounded-2xl transition-all duration-300">
+                            <h3 class="text-brand-400 font-bold mb-2">Long-Term Contracts</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Promote switching to two-year contracts through discounts or bundle offers.</p>
+                        </div>
+                        <div class="group hover:bg-slate-800 p-4 rounded-2xl transition-all duration-300">
+                            <h3 class="text-brand-400 font-bold mb-2">Fiber Optic Investigation</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Conduct deep dive into customer pain points for fiber segments specifically.</p>
+                        </div>
+                        <div class="group hover:bg-slate-800 p-4 rounded-2xl transition-all duration-300">
+                            <h3 class="text-brand-400 font-bold mb-2">Bundle Support Services</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Increase stickiness by bundling Online Security and Tech Support add-ons.</p>
+                        </div>
+                        <div class="group hover:bg-slate-800 p-4 rounded-2xl transition-all duration-300">
+                            <h3 class="text-brand-400 font-bold mb-2">Engagement for Multi-Line</h3>
+                            <p class="text-slate-300 text-sm leading-relaxed">Review customer journey for multiple phone lines to address billing friction.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-slate-800">
+                        <p class="text-xs text-slate-500 uppercase tracking-widest font-semibold mb-4">Detailed Strategies</p>
+                        <ul class="space-y-3 text-slate-300 text-sm">
+                            <li class="flex items-center space-x-2">
+                                <div class="w-1.5 h-1.5 bg-brand-500 rounded-full"></div>
+                                <span>Analyze customer experience for streaming services to investigate feedback on quality.</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <div class="w-1.5 h-1.5 bg-brand-500 rounded-full"></div>
+                                <span>Explore data-centric programs for non-phone service customers.</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <div class="w-1.5 h-1.5 bg-brand-500 rounded-full"></div>
+                                <span>Tailor communication for paperless billing users who may be more price-sensitive.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Sidebar (4 Cols) -->
+            <div class="lg:col-span-4 space-y-8">
+                
+                <!-- KPI Card -->
+                <div class="metric-gradient text-white rounded-3xl p-8 shadow-xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <p class="text-brand-100 font-medium uppercase tracking-widest text-xs mb-1">Model Accuracy</p>
+                    <h3 class="text-sm font-display font-semibold mb-2">ROC-AUC Score</h3>
+                    <div class="text-5xl font-display font-extrabold mb-4">0.832</div>
+                    <div class="w-full bg-white/20 h-2 rounded-full mb-2 overflow-hidden">
+                        <div class="bg-white h-full rounded-full" style="width: 83.2%"></div>
+                    </div>
+                    <p class="text-xs text-brand-100 leading-relaxed">
+                        Indicates a strong capability to differentiate between churners and loyal customers.
+                    </p>
+                </div>
+
+                <!-- Business Context -->
+                <div class="glass-card rounded-3xl p-6">
+                    <h3 class="text-sm font-display font-bold text-slate-900 uppercase tracking-widest mb-4">Business Context</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        A subscription-based company aims to reduce customer loss by identifying at-risk customers and understanding disengagement drivers. The company offers multiple pricing plans, contracts, and add-on services, seeking to improve retention through data-driven engagement strategies.
+                    </p>
+                </div>
+
+                <!-- Confusion Matrix Table -->
+                <div class="glass-card rounded-3xl p-6 overflow-hidden">
+                    <h3 class="text-sm font-display font-bold text-slate-900 uppercase tracking-widest mb-4">Confusion Matrix</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-100">
+                                    <th class="py-3 px-2 text-left text-slate-400 font-medium">Actual</th>
+                                    <th class="py-3 px-2 text-center text-slate-900 font-bold">Pred Churn</th>
+                                    <th class="py-3 px-2 text-center text-slate-900 font-bold">Pred Loyal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-slate-50">
+                                    <td class="py-4 px-2 font-bold text-slate-900 bg-slate-50/50">Churn</td>
+                                    <td class="py-4 px-2 text-center font-mono text-brand-600 bg-brand-50/30">193</td>
+                                    <td class="py-4 px-2 text-center font-mono text-slate-500">181</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4 px-2 font-bold text-slate-900 bg-slate-50/50">Loyal</td>
+                                    <td class="py-4 px-2 text-center font-mono text-slate-500">118</td>
+                                    <td class="py-4 px-2 text-center font-mono text-brand-600 bg-brand-50/30">915</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <p class="text-[10px] uppercase text-slate-400 font-bold">Precision</p>
+                            <p class="text-xs font-bold text-slate-900">0.73</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <p class="text-[10px] uppercase text-slate-400 font-bold">Recall</p>
+                            <p class="text-xs font-bold text-slate-900">0.70</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-lg py-2">
+                            <p class="text-[10px] uppercase text-slate-400 font-bold">F1-Score</p>
+                            <p class="text-xs font-bold text-slate-900">0.71</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drivers List -->
+                <div class="glass-card rounded-3xl p-6">
+                    <h3 class="text-sm font-display font-bold text-slate-900 uppercase tracking-widest mb-6">Key Risk & Loyalty Drivers</h3>
+                    <div class="space-y-4">
+                        <!-- Loyalty -->
+                        <div>
+                            <p class="text-[10px] uppercase text-emerald-600 font-bold mb-3 tracking-widest">Retention Anchors</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between p-3 rounded-xl loyalty-badge text-xs">
+                                    <span class="font-medium">Two Year Contract</span>
+                                    <span class="font-mono font-bold">-1.246</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 rounded-xl loyalty-badge text-xs opacity-80">
+                                    <span class="font-medium">One Year Contract</span>
+                                    <span class="font-mono font-bold">-0.746</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 rounded-xl loyalty-badge text-xs opacity-60">
+                                    <span class="font-medium">Online Security</span>
+                                    <span class="font-mono font-bold">-0.408</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 rounded-xl loyalty-badge text-xs opacity-40">
+                                    <span class="font-medium">Tech Support</span>
+                                    <span class="font-mono font-bold">-0.385</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Risk -->
+                        <div class="pt-4 border-t border-slate-100">
+                            <p class="text-[10px] uppercase text-rose-600 font-bold mb-3 tracking-widest">Risk Indicators</p>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between p-3 rounded-xl risk-badge text-xs">
+                                    <span class="font-medium">Fiber Optic Service</span>
+                                    <span class="font-mono font-bold">+0.986</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 rounded-xl risk-badge text-xs opacity-80">
+                                    <span class="font-medium">No Phone Service</span>
+                                    <span class="font-mono font-bold">+0.343</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 rounded-xl risk-badge text-xs opacity-60">
+                                    <span class="font-medium">Streaming Services</span>
+                                    <span class="font-mono font-bold">+0.321</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 rounded-xl risk-badge text-xs opacity-40">
+                                    <span class="font-medium">Paperless Billing</span>
+                                    <span class="font-mono font-bold">+0.271</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Driver Analysis Section (Full Width) -->
+        <section class="mt-8 glass-card rounded-3xl p-8 md:p-12 overflow-hidden">
+            <h2 class="text-3xl font-display font-bold text-slate-900 mb-10">Risk and Loyalty Driver Interpretation</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Loyalty -->
+                <div class="space-y-8">
+                    <h3 class="text-xl font-bold text-emerald-700 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Loyalty Drivers
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="relative pl-6 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-emerald-200 before:rounded-full">
+                            <h4 class="font-bold text-slate-900">Two-year Contracts</h4>
+                            <p class="text-sm text-slate-600 mt-1">The strongest loyalty driver, indicating high satisfaction or commitment.</p>
+                        </div>
+                        <div class="relative pl-6 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-emerald-200 before:rounded-full">
+                            <h4 class="font-bold text-slate-900">One-year Contracts</h4>
+                            <p class="text-sm text-slate-600 mt-1">Significantly increases loyalty compared to month-to-month options.</p>
+                        </div>
+                        <div class="relative pl-6 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-emerald-200 before:rounded-full">
+                            <h4 class="font-bold text-slate-900">Online Security & Tech Support</h4>
+                            <p class="text-sm text-slate-600 mt-1">Subscribers to these add-ons are considerably less likely to churn, suggesting added value and "stickiness".</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk -->
+                <div class="space-y-8">
+                    <h3 class="text-xl font-bold text-rose-700 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        Risk Drivers
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="relative pl-6 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-rose-200 before:rounded-full">
+                            <h4 class="font-bold text-slate-900">Fiber Optic Internet</h4>
+                            <p class="text-sm text-slate-600 mt-1">The strongest indicator of churn risk, suggesting potential issues with service quality or pricing competition.</p>
+                        </div>
+                        <div class="relative pl-6 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-rose-200 before:rounded-full">
+                            <h4 class="font-bold text-slate-900">Streaming TV & Movies</h4>
+                            <p class="text-sm text-slate-600 mt-1">Higher propensity to churn, possibly due to digitally savvy customers seeking better cross-platform deals.</p>
+                        </div>
+                        <div class="relative pl-6 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-rose-200 before:rounded-full">
+                            <h4 class="font-bold text-slate-900">Multiple Lines & Paperless Billing</h4>
+                            <p class="text-sm text-slate-600 mt-1">Correlates with higher risk, potentially due to billing complexity or higher price sensitivity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Adding micro-interactions
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'all 0.3s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

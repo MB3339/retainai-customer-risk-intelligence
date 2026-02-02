@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            500: '#3498DB',
+                            600: '#2980B9',
+                            700: '#1d4ed8',
+                            900: '#2C3E50',
+                        },
+                        neutral: {
+                            800: '#34495E',
+                            900: '#2C3E50',
+                        },
+                        accent: {
+                            success: '#2ECC71',
+                            danger: '#E74C3C',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F9FAFB;
+            color: #2C3E50;
+            scroll-behavior: smooth;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #2C3E50 0%, #3498DB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased leading-relaxed">
+
+    <!-- Header -->
+    <header class="pt-16 pb-12 px-6 max-w-5xl mx-auto text-center animate-fade-in-up">
+        <div class="inline-block px-4 py-1.5 mb-4 text-sm font-semibold tracking-wider text-brand-600 uppercase bg-brand-100 rounded-full">
+            Data Analysis Engine v2.4
+        </div>
+        <h1 class="text-5xl md:text-6xl font-extrabold font-display gradient-text mb-6">
+            Customer Churn <br>Analysis Report
+        </h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            Strategic insights and predictive modeling results for customer retention optimization.
+        </p>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 pb-24">
+        
+        <!-- Executive Summary Section -->
+        <section id="executive-summary" class="mb-16 animate-fade-in-up" style="animation-delay: 0.1s;">
+            <div class="glass-card rounded-3xl p-8 md:p-12 border-l-8 border-brand-500">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="p-2 bg-brand-500 rounded-lg text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </span>
+                    <h2 class="text-3xl font-bold font-display text-neutral-900">Executive Summary</h2>
+                </div>
+                <p class="text-xl text-neutral-800 leading-relaxed italic mb-8">
+                    "The churn prediction model is an effective tool for retention, with 88% accuracy and a 0.88 ROC-AUC score."
+                </p>
+                <div class="grid md:grid-cols-2 gap-8 text-gray-700">
+                    <div>
+                        <h4 class="font-bold text-neutral-900 mb-3 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-brand-500"></span> Key Churn Drivers
+                        </h4>
+                        <p class="text-sm leading-relaxed">High monthly charges, month-to-month contracts, lack of online security adoption, and negative service experiences (support issues, disruptions).</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-neutral-900 mb-3 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-accent-success"></span> Loyalty Indicators
+                        </h4>
+                        <p class="text-sm leading-relaxed">Long-term contracts, loyalty programs, bundled services, positive support interactions, and established customer tenure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Performance Grid -->
+        <section id="model-performance" class="mb-20 animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold font-display text-neutral-900">Model Performance Summary</h2>
+                <div class="hidden md:block h-px flex-grow mx-8 bg-gray-200"></div>
+            </div>
+            
+            <div class="bento-grid">
+                <!-- Primary Score -->
+                <div class="col-span-12 md:col-span-4 glass-card rounded-3xl p-8 flex flex-col items-center justify-center text-center transition-transform hover:scale-[1.02]">
+                    <span class="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2">ROC-AUC Score</span>
+                    <div class="text-7xl font-black font-display text-brand-500 mb-2">0.88</div>
+                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-brand-500 h-full w-[88%]"></div>
+                    </div>
+                    <p class="mt-4 text-xs font-medium text-gray-500">Strong Predictive Capability</p>
+                </div>
+
+                <!-- Metrics List -->
+                <div class="col-span-12 md:col-span-8 glass-card rounded-3xl p-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="p-4 border border-gray-100 rounded-2xl bg-white/50">
+                            <div class="text-3xl font-bold text-neutral-900 mb-1">88%</div>
+                            <div class="text-sm font-semibold text-brand-600 mb-2">Overall Accuracy</div>
+                            <p class="text-xs text-gray-500">Model's total correct predictions rate.</p>
+                        </div>
+                        <div class="p-4 border border-gray-100 rounded-2xl bg-white/50">
+                            <div class="text-3xl font-bold text-neutral-900 mb-1">78%</div>
+                            <div class="text-sm font-semibold text-brand-600 mb-2">Churn Precision</div>
+                            <p class="text-xs text-gray-500">Accuracy when predicting a churn event.</p>
+                        </div>
+                        <div class="p-4 border border-gray-100 rounded-2xl bg-white/50">
+                            <div class="text-3xl font-bold text-neutral-900 mb-1">70%</div>
+                            <div class="text-sm font-semibold text-brand-600 mb-2">Churn Recall</div>
+                            <p class="text-xs text-gray-500">Ability to capture all actual churners.</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 p-6 bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-gray-400 mb-4">Confusion Matrix Insights</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                            <div>
+                                <div class="text-lg font-bold text-accent-success">1,500</div>
+                                <div class="text-[10px] uppercase font-bold text-gray-400">True Negatives</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-orange-400">100</div>
+                                <div class="text-[10px] uppercase font-bold text-gray-400">False Positives</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-accent-danger">150</div>
+                                <div class="text-[10px] uppercase font-bold text-gray-400">False Negatives</div>
+                            </div>
+                            <div>
+                                <div class="text-lg font-bold text-brand-500">350</div>
+                                <div class="text-[10px] uppercase font-bold text-gray-400">True Positives</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Risk & Loyalty Drivers -->
+        <div class="grid md:grid-cols-2 gap-12 mb-20 animate-fade-in-up" style="animation-delay: 0.3s;">
+            <!-- Risk Drivers -->
+            <section>
+                <h2 class="text-2xl font-bold font-display text-neutral-900 mb-6 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-red-100 text-accent-danger flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    Key Risk Drivers
+                </h2>
+                <ul class="space-y-4">
+                    <li class="group glass-card p-4 rounded-2xl transition-all hover:translate-x-2">
+                        <strong class="block text-neutral-900 group-hover:text-brand-500 transition-colors">High Monthly Service Charges</strong>
+                        <p class="text-sm text-gray-600 mt-1">Direct correlation between higher bills and increased churn propensity.</p>
+                    </li>
+                    <li class="group glass-card p-4 rounded-2xl transition-all hover:translate-x-2">
+                        <strong class="block text-neutral-900 group-hover:text-brand-500 transition-colors">Month-to-Month Contracts</strong>
+                        <p class="text-sm text-gray-600 mt-1">Lack of commitment leads to higher susceptibility to competitor switching.</p>
+                    </li>
+                    <li class="group glass-card p-4 rounded-2xl transition-all hover:translate-x-2">
+                        <strong class="block text-neutral-900 group-hover:text-brand-500 transition-colors">Frequent Support Issues</strong>
+                        <p class="text-sm text-gray-600 mt-1">Dissatisfaction with service quality or resolution speed increases risk.</p>
+                    </li>
+                    <li class="group glass-card p-4 rounded-2xl transition-all hover:translate-x-2">
+                        <strong class="block text-neutral-900 group-hover:text-brand-500 transition-colors">Recent Service Disruptions</strong>
+                        <p class="text-sm text-gray-600 mt-1">Outages create unmet reliability expectations and immediate churn triggers.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Loyalty Drivers -->
+            <section>
+                <h2 class="text-2xl font-bold font-display text-neutral-900 mb-6 flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-lg bg-green-100 text-accent-success flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </span>
+                    Loyalty Drivers
+                </h2>
+                <ul class="space-y-4">
+                    <li class="group glass-card p-4 rounded-2xl transition-all hover:translate-x-2">
+                        <strong class="block text-neutral-900 group-hover:text-accent-success transition-colors">Long-Term Contracts</strong>
+                        <p class="text-sm text-gray-600 mt-1">Commitment to 1-2 year cycles significantly reduces churn probability.</p>
+                    </li>
+                    <li class="group glass-card p-4 rounded-2xl transition-all hover:translate-x-2">
+                        <strong class="block text-neutral-900 group-hover:text-accent-success transition-colors">Loyalty Program Participation</strong>
+                        <p class="text-sm text-gray-600 mt-1">Active enrollment fosters a sense of value and ongoing benefits.</p>
+                    </li>
+                    <li class="group glass-card p-4 rounded-2xl transition-all hover:translate-x-2">
+                        <strong class="block text-neutral-900 group-hover:text-accent-success transition-colors">Service Bundling</strong>
+                        <p class="text-sm text-gray-600 mt-1">Multi-service households face higher switching complexity and cost barriers.</p>
+                    </li>
+                    <li class="group glass-card p-4 rounded-2xl transition-all hover:translate-x-2">
+                        <strong class="block text-neutral-900 group-hover:text-accent-success transition-colors">Positive Support Tenure</strong>
+                        <p class="text-sm text-gray-600 mt-1">Established brand relationships correlate with long-term value satisfaction.</p>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- Strategies Section -->
+        <section id="engagement-strategies" class="mb-20 animate-fade-in-up" style="animation-delay: 0.4s;">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold font-display text-neutral-900 mb-4">Engagement Strategies</h2>
+                <p class="text-gray-600">Five actionable pillars for driving customer retention</p>
+            </div>
+            
+            <div class="grid gap-6">
+                <!-- Strategy 1 -->
+                <div class="flex flex-col md:flex-row gap-6 glass-card p-8 rounded-3xl items-start transition-all hover:shadow-xl hover:-translate-y-1">
+                    <div class="bg-brand-500 text-white w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-xl font-display shadow-lg shadow-brand-200">1</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Optimize Pricing and Value Communication</h3>
+                        <p class="text-gray-600">Proactively analyze usage for high-charge customers, offer personalized plan adjustments, and communicate value. Introduce tiered pricing or loyalty discounts.</p>
+                    </div>
+                </div>
+                <!-- Strategy 2 -->
+                <div class="flex flex-col md:flex-row gap-6 glass-card p-8 rounded-3xl items-start transition-all hover:shadow-xl hover:-translate-y-1">
+                    <div class="bg-brand-500 text-white w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-xl font-display shadow-lg shadow-brand-200">2</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Drive Feature Adoption and Awareness</h3>
+                        <p class="text-gray-600">Launch campaigns to educate and incentivize adoption of value-added features like online security, highlighting benefits and offering simple guides or trials.</p>
+                    </div>
+                </div>
+                <!-- Strategy 3 -->
+                <div class="flex flex-col md:flex-row gap-6 glass-card p-8 rounded-3xl items-start transition-all hover:shadow-xl hover:-translate-y-1">
+                    <div class="bg-brand-500 text-white w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-xl font-display shadow-lg shadow-brand-200">3</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Incentivize Long-Term Contract Renewals</h3>
+                        <p class="text-gray-600">Engage month-to-month customers with attractive incentives to migrate to longer contracts. Consider offering mid-tier contract options.</p>
+                    </div>
+                </div>
+                <!-- Strategy 4 -->
+                <div class="flex flex-col md:flex-row gap-6 glass-card p-8 rounded-3xl items-start transition-all hover:shadow-xl hover:-translate-y-1">
+                    <div class="bg-brand-500 text-white w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-xl font-display shadow-lg shadow-brand-200">4</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Enhance Proactive Support & Service Recovery</h3>
+                        <p class="text-gray-600">Implement early warning systems for high-risk customers. Prioritize follow-up, offer dedicated channels, or provide service credits for disruptions.</p>
+                    </div>
+                </div>
+                <!-- Strategy 5 -->
+                <div class="flex flex-col md:flex-row gap-6 glass-card p-8 rounded-3xl items-start transition-all hover:shadow-xl hover:-translate-y-1">
+                    <div class="bg-brand-500 text-white w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-xl font-display shadow-lg shadow-brand-200">5</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Strengthen Loyalty Programs and Promoting Bundling</h3>
+                        <p class="text-gray-600">Develop compelling, personalized loyalty programs. Actively promote multi-service bundles emphasizing convenience and cost savings.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Inputs & Metrics -->
+        <section id="raw-data" class="pt-16 border-t border-gray-200 animate-fade-in-up" style="animation-delay: 0.5s;">
+            <h2 class="text-2xl font-bold font-display text-neutral-900 mb-8">Original Inputs & Metrics</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Additional Context -->
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Analysis Context</h4>
+                        <div class="p-5 bg-white border border-gray-200 rounded-2xl shadow-sm italic text-gray-700">
+                            "it is a telecom company trying to retain churn customers"
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">User Parameters</h4>
+                        <div class="p-5 bg-gray-50 border border-gray-200 rounded-2xl text-sm text-gray-400">
+                            No additional user inputs provided for this run.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Display Metrics -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Model Engine Logs</h4>
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-brand-500 to-brand-100 rounded-2xl blur opacity-25"></div>
+                        <div class="relative p-6 bg-neutral-900 rounded-2xl overflow-hidden">
+                            <pre class="font-mono text-xs text-brand-200 leading-relaxed overflow-x-auto">
+[METRICS_SNAPSHOT_START]
+Model: RandomForestClassifier
+ROC-AUC: 0.8842
+F1-Score: 0.82
+Log Loss: 0.312
+Threshold: 0.50
+[METRICS_SNAPSHOT_END]
+---------------------------
+Processing telecom_dataset.csv
+Feature importance calculated.
+Cross-validation: k=5 (Pass)</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Simple animation trigger for scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
